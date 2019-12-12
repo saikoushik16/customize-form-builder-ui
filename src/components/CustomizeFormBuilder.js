@@ -4,23 +4,26 @@ import { ReactFormBuilder } from "react-form-builder2";
 import "../styles.css";
 import "react-form-builder2/dist/app.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import PrintButton from "../PrintButton";
+import PrintButton from "./PrintButton";
 import FormSubmit from './FormSubmit'
 import axios from 'axios';
 
 const data =  [
 ];
 
-class MyReactFormBuilder extends Component {
+class CustomizeFormBuilder extends Component {
+
   state = {
     fromContent: []
   };
+
   onLoad = () => {
     console.log(" Load From Data");
     return new Promise((resolve, reject) => {
       resolve(data);
     });
   };
+
   onPost = data => {
     console.log("Post Data", data);
     this.setState({
@@ -28,16 +31,11 @@ class MyReactFormBuilder extends Component {
     });
   };
 
-  onSubmitData = () => {
-    console.log("onSubmitData fromContent", this.state.fromContent);
-  };
-
-  handleSubmit = (e) => {
+  handleSubmit = (event) => {
       //e.preventDefault()
-      console.log("e",e);
       console.log("onSubmit fromContent=>", this.state.fromContent);
       const formObject = {
-          name: e.name,
+          name: event.name,
           pdf_form_content: this.state.fromContent
       };
 
@@ -46,25 +44,22 @@ class MyReactFormBuilder extends Component {
               console.log(res.data)
           }).catch((error) => {
               console.log(error)
-          });
+      });
+
       this.setState({
         fromContent: []
       });
-      this.onLoad();
   }
 
   render() {
     return (
       <div style={{marginTop: 20}}>
         <ReactFormBuilder onLoad={this.onLoad} onPost={this.onPost} />
-        <PrintButton
-          id={"react-form-builder-preview pull-left"}
-          label={"Download Form"}
-        />
-         <FormSubmit handleSubmit={this.handleSubmit}/>
+        <PrintButton  id={"react-form-builder-preview pull-left"} label={"Download Form"}/>
+        <FormSubmit handleSubmit={this.handleSubmit}/>
       </div>
     );
   }
 }
 
-export default MyReactFormBuilder;
+export default CustomizeFormBuilder;

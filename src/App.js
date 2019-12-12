@@ -2,23 +2,23 @@ import React from 'react';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-import MyReactFormBuilder from "./components/MyReactFormBuilder";
-import Forms from "./components/forms.component";
+import CustomizeFormBuilder from "./components/CustomizeFormBuilder";
+import FormList from "./components/FormList";
 
 function App() {
     return (<Router>
       <div className="App">
         <header>
           <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-            <a className="navbar-brand">React Axios Tutorial</a>
+            <a className="navbar-brand">Customized Personal Information</a>
   
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item active">
-                  <Link className="nav-link" to={"/create-new-form"}>Create Form</Link>
+                  <Link className="nav-link" to={"/create"}>Create Form</Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to={"/forms"}>Forms List</Link>
+                  <Link className="nav-link" to={"/list-forms"}>List Form</Link>
                 </li>
               </ul>
             </div>
@@ -30,8 +30,8 @@ function App() {
             <div className="col-md-12">
               <Switch>
                 {/* <Route exact path='/' component={CreateUser} /> */}
-                <Route path="/create-new-form" component={MyReactFormBuilder} />
-                <Route path="/forms" component={Forms} />
+                <Route path="/create" component={CustomizeFormBuilder} />
+                <Route path="/list-forms" component={FormList} />
               </Switch>
             </div>
           </div>
