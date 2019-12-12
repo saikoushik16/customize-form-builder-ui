@@ -1,12 +1,14 @@
 import React, { Component, Fragment } from "react";
 import ReactDOM from "react-dom";
 import { ReactFormBuilder } from "react-form-builder2";
+import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import "../styles.css";
 import "react-form-builder2/dist/app.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import PrintButton from "./PrintButton";
 import FormSubmit from './FormSubmit'
 import axios from 'axios';
+import SignatureCanvas from 'react-signature-canvas'
 
 const data =  [
 ];
@@ -53,10 +55,21 @@ class CustomizeFormBuilder extends Component {
 
   render() {
     return (
-      <div style={{marginTop: 20}}>
-        <ReactFormBuilder onLoad={this.onLoad} onPost={this.onPost} />
-        <PrintButton  id={"react-form-builder-preview pull-left"} label={"Download Form"}/>
-        <FormSubmit handleSubmit={this.handleSubmit}/>
+      <div>
+          <div style={{marginTop: 20}}>
+            <ReactFormBuilder onLoad={this.onLoad} onPost={this.onPost} />
+          </div>
+          <div style={{border: 5, borderColor: '#000000'}} >
+            <Label>Signature</Label>
+            <SignatureCanvas penColor='green'
+              canvasProps={{width: 500, height: 200, className: 'sigCanvas'}} clearButton="true" ref="mySignature" />
+          </div>
+          <div>
+            <PrintButton  id={"react-form-builder-preview pull-left"} label={"Download Form"}/>
+          </div>
+          <div style={{border: 1}}>
+            <FormSubmit handleSubmit={this.handleSubmit}/>
+          </div>
       </div>
     );
   }
