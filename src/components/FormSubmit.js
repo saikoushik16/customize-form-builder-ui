@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Button, Input } from 'reactstrap';
 
 class FormSubmit extends Component {
     constructor(props) {
@@ -27,17 +28,16 @@ class FormSubmit extends Component {
     };
 
     render() {
-        const { name, job } = this.state;
+        const { name } = this.state;
         return (
             <div style={{marginTop: 10}}>
                 <form>
-                    <label>Name</label>
-                    <input
-                        type="text"
-                        name="name"
-                        value={name}
-                        onChange={this.handleChange}/>
-                    <input type="button" value="submit" onClick={this.submitForm}></input>
+                    <Input 
+                    placeholder="Form name" 
+                    name="name"
+                    value={name}
+                    onChange={this.handleChange}/>
+                    <Button style={{marginTop: 5}} onClick={this.submitForm} value="submit">Submit Form</Button>
                 </form>
             </div>
         );
