@@ -48,16 +48,23 @@ class FormList extends Component {
             })
             .catch(function (error) {
                 console.log(error);
-            })
+        });
     };
 
     removeForm = id => {
         const { formsCollection } = this.state;
-        this.setState({
-            formsCollection : formsCollection.filter((frm, i) => {
-                return i !== formsCollection.findIndex(v => v.id === id);
-            }),
-        });
+        axios.delete('http://axilweb-assignment.do/api/documents/'+id)
+            .then(res => {
+                console.log("deleted document:",{id, res});
+                this.setState({
+                    formsCollection : formsCollection.filter((frm, i) => {
+                        return i !== formsCollection.findIndex(v => v.id === id);
+                    }),
+                });
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     };
 
     editForm = id => {
