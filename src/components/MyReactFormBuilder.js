@@ -6,6 +6,7 @@ import "react-form-builder2/dist/app.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import PrintButton from "../PrintButton";
 import { Button } from "reactstrap";
+import FormSubmit from './FormSubmit'
 import axios from 'axios';
 
 const data =  [
@@ -32,12 +33,13 @@ class MyReactFormBuilder extends Component {
     console.log("onSubmitData fromContent", this.state.fromContent);
   };
 
-  onSubmit = (e) => {
+  handleSubmit = (e) => {
       //e.preventDefault()
+      console.log("e",e);
       console.log("onSubmit fromContent=>", this.state.fromContent);
       const formObject = {
           //name: this.state.name,
-          name: 'this.state.name',
+          name: e.name,
           pdf_form_content: this.state.fromContent
       };
 
@@ -63,7 +65,8 @@ class MyReactFormBuilder extends Component {
           id={"react-form-builder-preview pull-left"}
           label={"Download Form"}
         />
-        <Button onClick={this.onSubmit}>Submit Form</Button>
+         <FormSubmit handleSubmit={this.handleSubmit}/>
+        {/* <Button onClick={this.onSubmit}>Submit Form</Button> */}
       </div>
     );
   }
