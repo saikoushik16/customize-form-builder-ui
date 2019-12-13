@@ -69,6 +69,8 @@ class FormList extends Component {
 
     editForm = id => {
         console.log('edit Form: ', id);
+        console.log('props.history: ',this.props.history);
+        this.props.history.push("/edit/"+id);
         // const { characters } = this.state;
 
         // this.setState({

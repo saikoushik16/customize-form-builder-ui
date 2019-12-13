@@ -3,6 +3,7 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import CustomizeFormBuilder from "./components/CustomizeFormBuilder";
+import EditCustomizeFormBuilder from "./components/EditCustomizeFormBuilder";
 import FormList from "./components/FormList";
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
               <Switch>
                 {/* <Route exact path='/' component={CreateUser} /> */}
                 <Route path="/create" component={CustomizeFormBuilder} />
+                <Route path="/edit/:id" component={EditCustomizeFormBuilder} />
                 <Route path="/list-forms" component={FormList} />
               </Switch>
             </div>

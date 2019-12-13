@@ -4,11 +4,10 @@ import { Button, Input } from 'reactstrap';
 class FormSubmit extends Component {
     constructor(props) {
         super(props)
-
+        console.log({ 'FormSubmit this.props': props});
         this.initialSate = {
             name: '',
         };
-
         this.state = this.initialSate;
     }
 

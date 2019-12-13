@@ -29,7 +29,7 @@ class CustomizeFormBuilder extends Component {
   onPost = data => {
     console.log("Post Data", data);
     this.setState({
-      fromContent: data
+      fromContent: data.task_data
     });
   };
 
