@@ -1,6 +1,6 @@
 import React from "react";
-import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 const pxToMm = px => {
   return Math.floor(px / document.getElementById("myMm").offsetHeight);
@@ -19,12 +19,8 @@ const range = (start, end) => {
     });
 };
 
-const PrintButton = ({ id, label }) => (
+const PrintButton = ({ id, label, name }) => (
   <div className="tc mb4 mt2">
-    {/*
-    Getting pixel height in milimeters:
-    https://stackoverflow.com/questions/7650413/pixel-to-mm-equation/27111621#27111621
-  */}
     <div id="myMm" style={{ height: "1mm" }} />
 
     <div
@@ -36,10 +32,7 @@ const PrintButton = ({ id, label }) => (
         const a4WidthMm = 210;
         const a4HeightMm = 297;
         const a4HeightPx = mmToPx(a4HeightMm);
-        const numPages =
-          inputHeightMm <= a4HeightMm
-            ? 1
-            : Math.floor(inputHeightMm / a4HeightMm) + 1;
+        const numPages =inputHeightMm <= a4HeightMm ? 1 : Math.floor(inputHeightMm / a4HeightMm) + 1;
         console.log({
           input,
           inputHeightMm,
@@ -66,33 +59,9 @@ const PrintButton = ({ id, label }) => (
 
           if (pdf) {
             pdf.addImage(imgData, "PNG", 0, 0);
-            pdf.save(`${id}.pdf`);
+            pdf.save(`${name}.pdf`);
           }
         });
-
-        ////////////////////////////////////////////////////////
-        // System to manually handle page breaks
-        // Wasn't able to get it working !
-        // The idea is to break html2canvas screenshots into multiple chunks and stich them together as a pdf
-        // If you get this working, please email me a khuranashivek@outlook.com and I'll update the article
-        ////////////////////////////////////////////////////////
-        // range(0, numPages).forEach((page) => {
-        //   console.log(`Rendering page ${page}. Capturing height: ${a4HeightPx} at yOffset: ${page*a4HeightPx}`);
-        //   html2canvas(input, {height: a4HeightPx, y: page*a4HeightPx})
-        //     .then((canvas) => {
-        //       const imgData = canvas.toDataURL('image/png');
-        //       console.log(imgData)
-        //       if (page > 0) {
-        //         pdf.addPage();
-        //       }
-        //       pdf.addImage(imgData, 'PNG', 0, 0);
-        //     });
-        //   ;
-        // });
-
-        // setTimeout(() => {
-        //   pdf.save(`${id}.pdf`);
-        // }, 5000);
       }}
     >
       {label}

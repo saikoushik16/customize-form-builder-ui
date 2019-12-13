@@ -1,17 +1,16 @@
 import React from 'react';
+import FormList from "./components/FormList";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-
 import CustomizeFormBuilder from "./components/CustomizeFormBuilder";
 import EditCustomizeFormBuilder from "./components/EditCustomizeFormBuilder";
-import FormList from "./components/FormList";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 function App() {
     return (<Router>
       <div className="App">
         <header>
           <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-            <a className="navbar-brand">Customized Personal Information</a>
+            <a className="navbar-brand">Customized Form Builder</a>
   
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav ml-auto">

@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
 import axios from 'axios';
 import DataTable from './DataTable';
-
+import React, { Component } from 'react';
 
 const TableHeader = () => {
     return (
@@ -16,23 +15,6 @@ const TableHeader = () => {
     );
 };
 
-const TableBody = props => {
-    const rows = props.characterData.map( (row, index) => {
-        return (
-            <tr key={index}>
-                <td>{row.name}</td>
-                <td>{row.job}</td>
-                <td>
-                    <button onClick={()=> props.removeCharacter(index)}>Delete</button>
-                </td>
-            </tr>
-        );
-    });
-
- return <tbody>{rows}</tbody>;
-};
-
-
 class FormList extends Component {
 
     constructor(props) {
@@ -40,15 +22,9 @@ class FormList extends Component {
         this.state = { formsCollection: [] };
     }
 
-    componentDidMount() {
-        axios.get('http://axilweb-assignment.do/api/documents')
-            .then(res => {
-                console.log("Get documents:",res.data);
-                this.setState({ formsCollection: res.data });
-            })
-            .catch(function (error) {
-                console.log(error);
-        });
+    async componentDidMount() {
+       const res = await axios.get('http://axilweb-assignment.do/api/documents');
+       this.setState({ formsCollection: res.data });
     };
 
     removeForm = id => {
@@ -68,16 +44,7 @@ class FormList extends Component {
     };
 
     editForm = id => {
-        console.log('edit Form: ', id);
-        console.log('props.history: ',this.props.history);
         this.props.history.push("/edit/"+id);
-        // const { characters } = this.state;
-
-        // this.setState({
-        //     characters : characters.filter((character, i) => {
-        //         return i !== id;
-        //     }),
-        // });
     };
 
     dataTable() {

@@ -4,7 +4,6 @@ import { Button, Input } from 'reactstrap';
 class FormSubmit extends Component {
     constructor(props) {
         super(props)
-        console.log({ 'FormSubmit this.props': props});
         this.initialSate = {
             name: '',
         };
@@ -12,18 +11,16 @@ class FormSubmit extends Component {
     }
 
     handleChange = event  => {
-
         const { value, name } = event.target;
-
         this.setState({
             [name] : value,
         });
+        this.props.updateFormName(value);
     };
 
     submitForm = () => {
         this.props.handleSubmit(this.state);
         this.setState(this.initialSate);
-
     };
 
     render() {
