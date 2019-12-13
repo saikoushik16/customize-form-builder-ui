@@ -21,26 +21,20 @@ class FormList extends Component {
         super(props);
         this.state = { formsCollection: [] };
     }
-
     async componentDidMount() {
-       const res = await axios.get('http://axilweb-assignment.do/api/documents');
-       this.setState({ formsCollection: res.data });
+        const res = await axios.get('http://axilweb-assignment.do/api/documents');
+        this.setState({ formsCollection: res.data });
     };
 
-    removeForm = id => {
+    removeForm = async (id) => {
         const { formsCollection } = this.state;
-        axios.delete('http://axilweb-assignment.do/api/documents/'+id)
-            .then(res => {
-                console.log("deleted document:",{id, res});
-                this.setState({
-                    formsCollection : formsCollection.filter((frm, i) => {
-                        return i !== formsCollection.findIndex(v => v.id === id);
-                    }),
-                });
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        const res = await axios.delete('http://axilweb-assignment.do/api/documents/'+id)
+        console.log("deleted document:",{id, res});
+        this.setState({
+            formsCollection : formsCollection.filter((frm, i) => {
+                return i !== formsCollection.findIndex(v => v.id === id);
+            }),
+        });
     };
 
     editForm = id => {

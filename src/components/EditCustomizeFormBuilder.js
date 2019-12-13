@@ -10,10 +10,15 @@ import { ReactFormBuilder } from "react-form-builder2";
 
 class EditCustomizeFormBuilder extends Component {
 
-    state = {
-      formContent: [],
-      id:-1
-    };
+    constructor(props) {
+        super(props)
+        this.initialSate = {
+            isEmpty: false,
+            formContent: [],
+            id:-1
+        };
+        this.state = this.initialSate;
+    }
 
    onLoad = async() => {
     let url = 'http://axilweb-assignment.do/api/documents/'+this.props.match.params.id;
@@ -37,6 +42,14 @@ class EditCustomizeFormBuilder extends Component {
 
   handleSubmit = () => {
       //e.preventDefault()
+      // this.state.name.length !== 0 &&
+      console.log("hndl submit", this.state);
+      if (this.state.name && this.state.name.replace(/\s/g, '').length !== 0) {
+         this.setState({isEmpty: false });
+      } else{
+          this.setState({isEmpty: true });
+          return;
+      }
       const formObject = {
           name: this.state.name,
           pdf_form_content: this.state.formContent
@@ -52,8 +65,10 @@ class EditCustomizeFormBuilder extends Component {
   }
 
   handleChange = event  => {
-
     const { value, name } = event.target;
+    if (value.replace(/\s/g, '').length !== 0) {
+      this.setState({isEmpty: false });
+    }
 
     this.setState({
         [name] : value,
@@ -67,10 +82,14 @@ class EditCustomizeFormBuilder extends Component {
             <ReactFormBuilder onLoad={this.onLoad} onPost={this.onPost} />
           </div>
 
-          <div style={{border: 5, borderColor: '#000000'}} >
-            <Label>Signature</Label>
-            <SignatureCanvas penColor='green'
-              canvasProps={{width: 500, height: 200, className: 'sigCanvas'}} clearButton="true" ref="mySignature" />
+          <Label style={{color: '#12d3f1', fontWeight: 'bold', fontSize: 'md'}}>Signature Below</Label>
+          <hr/>
+          <div style={{border: 5, color: "##000000", borderColor: '#000000'}} >
+            <SignatureCanvas penColor='black'
+              canvasProps={{width: 500, height: 200, className: 'sigCanvas'}}
+              // backgroundColor={rgba(0,0,0,0)}
+              // clearButton="true" ref="mySignature"
+               />
           </div>
 
           <div>
@@ -79,6 +98,7 @@ class EditCustomizeFormBuilder extends Component {
 
           <div style={{marginTop: 10}}>
             <form>
+            {this.state.isEmpty ? <span style={{color: '#dc3545', fontWeight: 'bold', fontSize: 'md' }}>Name can't be empty</span>: null}
                 <Input 
                 placeholder="Form name" 
                 name="name"

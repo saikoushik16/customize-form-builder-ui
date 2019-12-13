@@ -60,11 +60,15 @@ class CustomizeFormBuilder extends Component {
           <div style={{marginTop: 20}}>
             <ReactFormBuilder onLoad={this.onLoad} onPost={this.onPost} />
           </div>
-
-          <div style={{border: 5, borderColor: '#000000'}} >
-            <Label>Signature</Label>
-            <SignatureCanvas penColor='green'
-              canvasProps={{width: 500, height: 200, className: 'sigCanvas'}} clearButton="true" ref="mySignature" />
+          <Label style={{color: '#12d3f1', fontWeight: 'bold', fontSize: 'md'}}>Signature Below</Label>
+          <hr/>
+          <div style={{border: 5, color: '#000000', borderColor: '#000000'}} >
+            
+            <SignatureCanvas penColor='black'
+              canvasProps={{width: 500, height: 200}}
+              // backgroundColor={rgba(0,0,0,0)}
+              // clearButton="true" ref="mySignature"
+               />
           </div>
 
           <div>
