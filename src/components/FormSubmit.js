@@ -37,7 +37,7 @@ class FormSubmit extends Component {
     };
 
     render() {
-        const { name, error } = this.state;
+        const { name } = this.state;
         return (
             <div style={{marginTop: 10}}>
                 <form>
