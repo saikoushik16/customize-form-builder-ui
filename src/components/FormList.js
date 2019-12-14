@@ -1,6 +1,6 @@
-import axios from 'axios';
 import DataTable from './DataTable';
 import React, { Component } from 'react';
+import ApiService from "../service/ApiService";
 
 const TableHeader = () => {
     return (
@@ -22,13 +22,13 @@ class FormList extends Component {
         this.state = { formsCollection: [] };
     }
     async componentDidMount() {
-        const res = await axios.get('http://axilweb-assignment.do/api/documents');
+        const res =  await ApiService.fetchForms();
         this.setState({ formsCollection: res.data });
     };
 
     removeForm = async (id) => {
         const { formsCollection } = this.state;
-        const res = await axios.delete('http://axilweb-assignment.do/api/documents/'+id)
+        const res = await ApiService.deleteForm(id)
         console.log("deleted document:",{id, res});
         this.setState({
             formsCollection : formsCollection.filter((frm, i) => {

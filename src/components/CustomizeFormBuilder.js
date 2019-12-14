@@ -1,11 +1,11 @@
 import "../styles.css";
-import axios from 'axios';
 import { Label} from 'reactstrap';
 import FormSubmit from './FormSubmit'
 import PrintButton from "./PrintButton";
 import React, { Component } from "react";
 import "react-form-builder2/dist/app.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import ApiService from "../service/ApiService";
 import SignatureCanvas from 'react-signature-canvas'
 import { ReactFormBuilder } from "react-form-builder2";
 
@@ -13,9 +13,14 @@ const data =  [];
 
 class CustomizeFormBuilder extends Component {
 
-    state = {
-      fromContent: []
+  constructor(props) {
+    super(props)
+    this.initialSate = {
+      name:'',
+      formContent: [],
     };
+    this.state = this.initialSate;
+  }
 
   onLoad = () => {
     return new Promise((resolve, reject) => {
@@ -25,27 +30,16 @@ class CustomizeFormBuilder extends Component {
 
   onPost = data => {
     this.setState({
-      fromContent: data.task_data
+      formContent: data.task_data
     });
   };
 
-  handleSubmit = (event) => {
-      //e.preventDefault()
-      const formObject = {
-          name: event.name,
-          pdf_form_content: this.state.fromContent
-      };
-
-      axios.post('http://axilweb-assignment.do/api/documents', formObject)
-          .then((res) => {
-              console.log(res.data)
-          }).catch((error) => {
-              console.log(error)
-      });
-
-      this.setState({
-        fromContent: []
-      });
+  handleSubmit = async (event) => {
+    const formObject = {
+        name: event.name,
+        pdf_form_content: this.state.formContent
+    };
+    await ApiService.addForm(formObject);
   }
 
   updateFormName = (name) => {

@@ -1,9 +1,10 @@
 import "../styles.css";
-import axios from 'axios';
+//import axios from 'axios';
 import PrintButton from "./PrintButton";
 import React, { Component } from "react";
 import "react-form-builder2/dist/app.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import ApiService from "../service/ApiService";
 import { Button, Label, Input } from 'reactstrap';
 import SignatureCanvas from 'react-signature-canvas'
 import { ReactFormBuilder } from "react-form-builder2";
@@ -21,14 +22,16 @@ class EditCustomizeFormBuilder extends Component {
     }
 
    onLoad = async() => {
-    let url = 'http://axilweb-assignment.do/api/documents/'+this.props.match.params.id;
-    const loadData = await axios.get(url);
-    let formContent = (loadData.data.pdf_form_content)? loadData.data.pdf_form_content: [];
+    
+    const res = await ApiService.fetchFormById(this.props.match.params.id);
+    let formContent = (res.data.pdf_form_content)? res.data.pdf_form_content: [];
+
     this.setState({ 
-        formContent,
-        id: loadData.data.id,
-        name: loadData.data.name
-      });
+      formContent,
+      id: res.data.id,
+      name: res.data.name
+    });
+    
     return new Promise((resolve, reject) => {
       resolve(formContent);
     });
@@ -40,10 +43,7 @@ class EditCustomizeFormBuilder extends Component {
     });
   };
 
-  handleSubmit = () => {
-      //e.preventDefault()
-      // this.state.name.length !== 0 &&
-      console.log("hndl submit", this.state);
+  handleSubmit = async () => {
       if (this.state.name && this.state.name.replace(/\s/g, '').length !== 0) {
          this.setState({isEmpty: false });
       } else{
@@ -51,17 +51,12 @@ class EditCustomizeFormBuilder extends Component {
           return;
       }
       const formObject = {
+          id:this.state.id,
           name: this.state.name,
           pdf_form_content: this.state.formContent
       };
-      let url = 'http://axilweb-assignment.do/api/documents/'+this.state.id;
-      console.log({ formObject , url});
-      axios.put(url, formObject)
-          .then((res) => {
-              console.log('Edit success:',res)
-          }).catch((error) => {
-              console.log('Edit err:',error)
-      });
+      
+      await ApiService.editForm(formObject);
   }
 
   handleChange = event  => {
